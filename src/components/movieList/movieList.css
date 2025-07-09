@@ -1,0 +1,62 @@
+.movie-row-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0.5rem 1rem 0.5rem;
+}
+
+.movie-row-showmore {
+  border: 1px solid #ddd;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #ddd;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.movie-row-showmore:hover {
+  background-color: #ddd;
+  color: #111;
+}
+
+
+
+.movie__list {
+    padding: 0 3rem 3rem 3rem;
+}
+
+.list__title {
+font-size: 1.75rem;
+margin:  2.5rem;
+}
+
+.list__cards {
+    display: flex;
+    flex-wrap: wrap ;
+    justify-content: center;
+}
+.list__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    margin: 1rem 0;
+}
+
+.list__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.list__more {
+    font-size: 1rem;
+    color: #00bfff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.list__more:hover {
+    color: #1e90ff;
+}
