@@ -11,10 +11,13 @@ const MovieList = () => {
     const getData = async () => {
       try {
         const response = await fetch(
-          `https://api.themoviedb.org/3/movie/${type || "popular"}?api_key=API_KEY&language=en-US`
+          `https://api.themoviedb.org/3/movie/${type || "popular"}?api_key=6e5c5ee5feedc953d504088b213370e5&language=en-US`
         )
         const data = await response.json()
         setMovieList(data.results)
+        console.log("Fetched Movies:", data.results);
+
+        
       } catch (error) {
         console.error("Failed to fetch movies:", error)
       }
