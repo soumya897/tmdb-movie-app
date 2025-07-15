@@ -6,12 +6,14 @@ import Cards from "../card/card";
 const MovieList = () => {
   const [movieList, setMovieList] = useState([]);
   const { type } = useParams();
+    const apikey=import.meta.env.VITE_API_KEY;
+
 
   useEffect(() => {
     const getData = async () => {
       try {
         const response = await fetch(
-          `https://api.themoviedb.org/3/movie/${type || "popular"}?api_key=6e5c5ee5feedc953d504088b213370e5&language=en-US`
+          `https://api.themoviedb.org/3/movie/${type || "popular"}?api_key=${apikey}&language=en-US`
         );
         const data = await response.json();
         setMovieList(data.results);

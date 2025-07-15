@@ -14,12 +14,14 @@ const categories = [
 const Home = () => {
   const [movies, setMovies] = useState({})
   const [carouselMovies, setCarouselMovies] = useState([])
+    const apikey=import.meta.env.VITE_API_KEY;
+
 
   useEffect(() => {
     categories.forEach(async ({ path }) => {
       try {
         const res = await fetch(
-          `https://api.themoviedb.org/3/movie/${path}?api_key=6e5c5ee5feedc953d504088b213370e5&language=en-US`
+          `https://api.themoviedb.org/3/movie/${path}?api_key=${apikey}&language=en-US`
         )
         const data = await res.json()
         setMovies((prev) => ({ ...prev, [path]: data.results }))
@@ -31,7 +33,7 @@ const Home = () => {
     const fetchCarousel = async () => {
       try {
         const res = await fetch(
-          "https://api.themoviedb.org/3/movie/popular?api_key=6e5c5ee5feedc953d504088b213370e5&language=en-US"
+          `https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US`
         )
         const data = await res.json()
         setCarouselMovies(data.results)

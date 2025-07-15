@@ -7,12 +7,13 @@ const Movie = () => {
   const [currentMovieDetail, setMovie] = useState(null);
   const [error, setError] = useState(false);
   const { id } = useParams();
+  const apikey=import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     const getData = async () => {
       try {
         const res = await fetch(
-          `https://api.themoviedb.org/3/movie/${id}?api_key=6e5c5ee5feedc953d504088b213370e5&language=en-US`
+          `https://api.themoviedb.org/3/movie/${id}?api_key=${apikey}&language=en-US`
         );
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
