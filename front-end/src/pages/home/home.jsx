@@ -20,7 +20,7 @@ const Home = () => {
     categories.forEach(async ({ path }) => {
       try {
         const res = await fetch(
-          `https://api.themoviedb.org/3/movie/${path}?api_key=API_KEY&language=en-US`
+          `https://api.themoviedb.org/3/movie/${path}?api_key=6e5c5ee5feedc953d504088b213370e5&language=en-US`
         )
         const data = await res.json()
         setMovies((prev) => ({ ...prev, [path]: data.results }))
