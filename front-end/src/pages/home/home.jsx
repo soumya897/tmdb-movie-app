@@ -1,52 +1,58 @@
-import React, { useEffect, useState } from "react"
-import "./home.css"
-import "react-responsive-carousel/lib/styles/carousel.min.css"
-import { Carousel } from "react-responsive-carousel"
-import { Link } from "react-router-dom"
-import Cards from "../../components/card/card"
+import React, { useEffect, useState } from "react";
+import "./home.css";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
+import { Link } from "react-router-dom";
+import Cards from "../../components/card/card";
 
 const categories = [
   { title: "Popular", path: "popular" },
   { title: "Top Rated", path: "top_rated" },
-  { title: "Upcoming", path: "upcoming" }
-]
+  { title: "Upcoming", path: "upcoming" },
+];
 
 const Home = () => {
-  const [movies, setMovies] = useState({})
-  const [carouselMovies, setCarouselMovies] = useState([])
+  const [movies, setMovies] = useState({});
+  const [carouselMovies, setCarouselMovies] = useState([]);
 
   useEffect(() => {
-    // Fetch rows for each category
     categories.forEach(async ({ path }) => {
       try {
         const res = await fetch(
           `https://api.themoviedb.org/3/movie/${path}?api_key=6e5c5ee5feedc953d504088b213370e5&language=en-US`
-        )
-        const data = await res.json()
-        setMovies((prev) => ({ ...prev, [path]: data.results }))
+        );
+        const data = await res.json();
+        setMovies((prev) => ({ ...prev, [path]: data.results }));
       } catch (err) {
-        console.error(`Error fetching ${path}:`, err)
+        console.error(`Error fetching ${path}:`, err);
       }
-    })
+    });
 
-    // Fetch movies for carousel
     const fetchCarousel = async () => {
       try {
         const res = await fetch(
           "https://api.themoviedb.org/3/movie/popular?api_key=6e5c5ee5feedc953d504088b213370e5&language=en-US"
-        )
-        const data = await res.json()
-        setCarouselMovies(data.results)
+        );
+        const data = await res.json();
+        setCarouselMovies(data.results);
       } catch (err) {
-        console.error("Error fetching carousel movies:", err)
+        console.error("Error fetching carousel movies:", err);
       }
-    }
+    };
 
-    fetchCarousel()
-  }, [])
+    fetchCarousel();
+  }, []);
 
   return (
     <div className="poster">
+      {/* Top Bar */}
+      <div className="top-bar">
+        <div className="logo">🎬 TMDB App</div>
+        <Link to="/auth" className="login-button">
+          Login / Sign Up
+        </Link>
+      </div>
+
       {/* Hero Carousel */}
       <Carousel
         showThumbs={false}
@@ -87,7 +93,9 @@ const Home = () => {
         <div key={path} className="movie-row-section">
           <div className="movie-row-header">
             <h2 className="movie-row-title">{title}</h2>
-            <Link to={`/movies/${path}`} className="movie-row-showmore">Show More</Link>
+            <Link to={`/movies/${path}`} className="movie-row-showmore">
+              Show More
+            </Link>
           </div>
           <div className="movie-row">
             {movies[path]?.slice(0, 10).map((movie) => (
@@ -97,7 +105,7 @@ const Home = () => {
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

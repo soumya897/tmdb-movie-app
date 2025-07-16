@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 
-export const dbConnection = () => {
+const dbConnection = () => {
   mongoose
     .connect(process.env.MONGO_URL, {
       dbName: "TMDB_MovieAPI",
@@ -12,3 +12,5 @@ export const dbConnection = () => {
       console.log("Connection Error : ", err);
     });
 };
+
+module.exports = dbConnection;
