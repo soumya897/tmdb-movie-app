@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Layout from "./components/layout/Layout"
 import Home from "./pages/home/home"
 import Movie from "./pages/movieDetail/movie.jsx"
-import MovieList from "./components/movieList/movieList" // <-- Import this
+import MovieList from "./components/movieList/movieList" 
 
 const App = () => {
     return (

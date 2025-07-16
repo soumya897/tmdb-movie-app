@@ -1,30 +1,24 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Layout from "./components/layout/Layout";
-import Home from "./pages/home/home";
-import Movie from "./pages/movieDetail/movie.jsx";
-import MovieList from "./components/movieList/movieList";
-import Auth from "./pages/Auth/Auth.js";
-import VerifyOtp from "./pages/Auth/VeryfyOtp.js";
+import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import Header from './components/header/Header';
+import Home from './pages/home/home';
+import MovieList from './components/movieList/movieList';
+import Movie from './pages/movieDetail/movie';
 
-const App = () => {
+function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Auth pages (no layout) */}
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/verify-otp" element={<VerifyOtp />} />
-
-        {/* Main layout pages */}
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="movie/:id" element={<Movie />} />
-          <Route path="movies/:type" element={<MovieList />} />
-          <Route path="*" element={<h1>404 - Page Not Found</h1>} />
-        </Route>
-      </Routes>
-    </Router>
+    <div className="App">
+        <Router>
+          <Header />
+            <Routes>
+                <Route index element={<Home />}></Route>
+                <Route path="movie/:id" element={<Movie />}></Route>
+                <Route path="movies/:type" element={<MovieList />}></Route>
+                <Route path="/*" element={<h1>Error Page</h1>}></Route>
+            </Routes>
+        </Router>
+    </div>
   );
-};
+}
 
 export default App;

@@ -12,17 +12,30 @@ const categories = [
 ];
 
 const Home = () => {
+
   const [movies, setMovies] = useState({});
   const [carouselMovies, setCarouselMovies] = useState([]);
+  const [movies, setMovies] = useState({})
+  const [carouselMovies, setCarouselMovies] = useState([])
+    const apikey=import.meta.env.VITE_API_KEY;
+
+
 
   useEffect(() => {
     categories.forEach(async ({ path }) => {
       try {
         const res = await fetch(
+
           `https://api.themoviedb.org/3/movie/${path}?api_key=6e5c5ee5feedc953d504088b213370e5&language=en-US`
         );
         const data = await res.json();
         setMovies((prev) => ({ ...prev, [path]: data.results }));
+
+          `https://api.themoviedb.org/3/movie/${path}?api_key=${apikey}&language=en-US`
+        )
+        const data = await res.json()
+        setMovies((prev) => ({ ...prev, [path]: data.results }))
+
       } catch (err) {
         console.error(`Error fetching ${path}:`, err);
       }
@@ -31,10 +44,16 @@ const Home = () => {
     const fetchCarousel = async () => {
       try {
         const res = await fetch(
+
           "https://api.themoviedb.org/3/movie/popular?api_key=6e5c5ee5feedc953d504088b213370e5&language=en-US"
         );
         const data = await res.json();
-        setCarouselMovies(data.results);
+
+          `https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US`
+        )
+        const data = await res.json()
+        setCarouselMovies(data.results)
+
       } catch (err) {
         console.error("Error fetching carousel movies:", err);
       }
@@ -45,7 +64,7 @@ const Home = () => {
 
   return (
     <div className="poster">
-      {/* Top Bar */}
+
       <div className="top-bar">
         <div className="logo">🎬 TMDB App</div>
         <Link to="/auth" className="login-button">
@@ -54,6 +73,7 @@ const Home = () => {
       </div>
 
       {/* Hero Carousel */}
+
       <Carousel
         showThumbs={false}
         autoPlay
@@ -61,34 +81,42 @@ const Home = () => {
         infiniteLoop
         showStatus={false}
       >
-        {carouselMovies.map((movie) => (
-          <Link
-            key={movie.id}
-            to={`/movie/${movie.id}`}
-            style={{ textDecoration: "none", color: "white" }}
-          >
-            <div className="posterImage">
-              <img
-                src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-                alt={movie.original_title}
-              />
-            </div>
-            <div className="posterImage__overlay">
-              <div className="posterImage__title">{movie.original_title}</div>
-              <div className="posterImage__runtime">
-                {movie.release_date}
-                <span className="posterImage__rating">
-                  {movie.vote_average}
-                  <i className="fas fa-star" />
-                </span>
+        {carouselMovies
+          .filter((movie) => movie.backdrop_path)
+          .map((movie) => (
+            <Link
+              key={movie.id}
+              to={`/movie/${movie.id}`}
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              <div className="posterImage">
+                <img
+                  src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
+                  alt={movie.original_title || "No Title"}
+                  onError={(e) => {
+                    e.target.src = "/assets/noBackdrop.png"
+                  }}
+                />
+                <div className="posterImage__overlay">
+                  <div className="posterImage__title">
+                    {movie.original_title}
+                  </div>
+                  <div className="posterImage__runtime">
+                    {movie.release_date}
+                    <span className="posterImage__rating">
+                      {movie.vote_average}
+                      <i className="fas fa-star" />
+                    </span>
+                  </div>
+                  <div className="posterImage__description">
+                    {movie.overview}
+                  </div>
+                </div>
               </div>
-              <div className="posterImage__description">{movie.overview}</div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))}
       </Carousel>
 
-      {/* Movie Rows */}
       {categories.map(({ title, path }) => (
         <div key={path} className="movie-row-section">
           <div className="movie-row-header">
@@ -98,9 +126,12 @@ const Home = () => {
             </Link>
           </div>
           <div className="movie-row">
-            {movies[path]?.slice(0, 10).map((movie) => (
-              <Cards key={movie.id} movie={movie} />
-            ))}
+            {movies[path]
+              ?.filter((movie) => movie.poster_path || movie.backdrop_path)
+              .slice(0, 10)
+              .map((movie) => (
+                <Cards key={movie.id} movie={movie} />
+              ))}
           </div>
         </div>
       ))}
@@ -108,4 +139,7 @@ const Home = () => {
   );
 };
 
+
 export default Home;
+
+
